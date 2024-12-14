@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    org:
+
+      springframework:
+        web: INFO
+      hibernate: INFO
+spring:
+  topics:
+    consumer: externalProductAConsumerTopic
+    producer: externalProductBProducerTopic
+  kafka:
+    consumer:
+      group-id: externalProductGroup
+      max-partition-fetch-bytes: 20971520
+      fetch-max-bytes: 20971520
+    bootstrap-servers: 'localhost:29092'
+  application:
+    name: order
+  datasource:
+    username: 'orderapi'
+    url: jdbc:postgresql://localhost:5432/orderapi
+    password: 'password'
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'true'
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'true'
+
