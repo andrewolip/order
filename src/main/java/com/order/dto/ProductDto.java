@@ -3,6 +3,8 @@ package com.order.dto;
 import java.math.BigDecimal;
 
 public class ProductDto {
+    private Long id;
+    private String productId;
     private String name;
     private String category;
     private BigDecimal price;
@@ -10,11 +12,37 @@ public class ProductDto {
 
     public ProductDto(){}
 
-    public ProductDto(String name, String category, BigDecimal price, Integer quantity) {
+    public ProductDto(Long id, String name, String category, BigDecimal price, Integer quantity) {
+        this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public ProductDto(Long id, String productId, String name, String category, BigDecimal price, Integer quantity) {
+        this.id = id;
+        this.productId = productId;
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getName() {

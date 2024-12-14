@@ -51,13 +51,13 @@ public class ExternalProductAConsumer {
     @KafkaListener(topics = "${spring.topics.consumer}", groupId = "${spring.kafka.consumer.group-id}")
     public void consume(String message) {
         try {
+            log.info("Consuming a new message {}", message);
             Set<OrderDto> orders = objectMapper.readValue(message, new TypeReference<Set<OrderDto>>() {});
             var calculatedOrders = service.calculate(orders);
             producer.sendMessage(calculatedOrders);
         } catch (JsonProcessingException ex) {
             log.error("Error to convert kafka message into object", ex);
         }
-
     }
 
     public DefaultKafkaConsumerFactory<String, String> consumerFactory() {

@@ -1,7 +1,7 @@
 package com.order.entity;
 
-import com.order.dto.ProductDto;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +17,12 @@ import java.util.Set;
 @Table(name = "orders")
 @Entity
 public class Order implements Serializable {
+    private Long id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @Column(name = "order_id")
+    private String orderId;
 
     private String customer;
 
@@ -33,30 +36,38 @@ public class Order implements Serializable {
 
     public Order(){}
 
-    public Order(String id, String customer, String status, Set<Product> products, ZonedDateTime createDate) {
+    public Order(Long id, String orderId, String customer, String status, Set<Product> products, ZonedDateTime createDate) {
         this.id = id;
+        this.orderId = orderId;
         this.customer = customer;
         this.status = status;
         this.products = products;
         this.createDate = createDate;
     }
 
-    public Order(String customer, String status, Set<Product> products) {
+    public Order(Long id, String customer, String status, Set<Product> products) {
+        this.id = id;
         this.customer = customer;
         this.status = status;
         this.products = products;
     }
 
-
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+    
     public String getCustomer() {
         return customer;
     }

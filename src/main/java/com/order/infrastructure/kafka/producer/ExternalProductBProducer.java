@@ -33,6 +33,7 @@ public class ExternalProductBProducer {
 
     public void sendMessage(List<CalculatedOrderDto> calculatedOrders) {
         try {
+            log.info("Producing a new message {}", calculatedOrders);
             String resultJson = objectMapper.writeValueAsString(calculatedOrders);
             kafkaTemplate.send("externalProductBProducerTopic", resultJson);
         } catch(JsonProcessingException ex) {

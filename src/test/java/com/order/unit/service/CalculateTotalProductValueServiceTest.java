@@ -1,8 +1,9 @@
-package com.order.service;
+package com.order.unit.service;
 
 import com.order.dto.OrderDto;
 import com.order.dto.ProductDto;
 import com.order.entity.Order;
+import com.order.service.SaveOrderService;
 import com.order.service.impl.CalculateTotalProductPriceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -60,7 +61,7 @@ public class CalculateTotalProductValueServiceTest {
     public void test3() {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             service.calculate(Set.of(
-                    new OrderDto(UUID.randomUUID().toString(), CUSTOMER, null, PENDING_STATUS, null)
+                    new OrderDto(1L, UUID.randomUUID().toString(), CUSTOMER, null, PENDING_STATUS, null)
             ));
         });
 
@@ -72,7 +73,7 @@ public class CalculateTotalProductValueServiceTest {
     public void test4() {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             service.calculate(Set.of(
-                    new OrderDto(UUID.randomUUID().toString(), CUSTOMER, Collections.emptySet(), PENDING_STATUS, null)
+                    new OrderDto(1L, UUID.randomUUID().toString(), CUSTOMER, Collections.emptySet(), PENDING_STATUS, null)
             ));
         });
 
@@ -86,14 +87,14 @@ public class CalculateTotalProductValueServiceTest {
         var total = new BigDecimal("1357.50").setScale(2, RoundingMode.HALF_UP);
         var orders = service.calculate(
                 Set.of(
-                        new OrderDto(CUSTOMER, PENDING_STATUS, Set.of(
-                                new ProductDto("Prod1", "Cat1", BigDecimal.valueOf(10), 5),
-                                new ProductDto("Prod2", "Cat1", BigDecimal.valueOf(15.25), 2),
-                                new ProductDto("Prod3", "Cat1", BigDecimal.valueOf(24), 4),
-                                new ProductDto("Prod4", "Cat1", BigDecimal.valueOf(150.50), 2),
-                                new ProductDto("Prod5", "Cat1", BigDecimal.valueOf(100.0), 3),
-                                new ProductDto("Prod6", "Cat1", BigDecimal.valueOf(120), 4),
-                                new ProductDto("Prod7", "Cat1", BigDecimal.valueOf(100), 1)
+                        new OrderDto(1L, CUSTOMER, PENDING_STATUS, Set.of(
+                                new ProductDto(1L,"Prod1", "Cat1", BigDecimal.valueOf(10), 5),
+                                new ProductDto(2L,"Prod2", "Cat1", BigDecimal.valueOf(15.25), 2),
+                                new ProductDto(3L,"Prod3", "Cat1", BigDecimal.valueOf(24), 4),
+                                new ProductDto(4L,"Prod4", "Cat1", BigDecimal.valueOf(150.50), 2),
+                                new ProductDto(5L,"Prod5", "Cat1", BigDecimal.valueOf(100.0), 3),
+                                new ProductDto(6L,"Prod6", "Cat1", BigDecimal.valueOf(120), 4),
+                                new ProductDto(7L,"Prod7", "Cat1", BigDecimal.valueOf(100), 1)
                         ))
                 )
         );

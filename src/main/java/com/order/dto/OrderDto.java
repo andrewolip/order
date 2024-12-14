@@ -1,37 +1,56 @@
 package com.order.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 public class OrderDto {
-    private String id;
-    private String customer;
-    private Set<ProductDto> products;
-    private String status;
+    private Long id;
+
+    private String orderId;
+
+    @NotBlank private String customer;
+
+    @NotNull private Set<ProductDto> products;
+
+    @NotBlank private String status;
+
     private ZonedDateTime createDate;
 
     public OrderDto() {}
 
-    public OrderDto(String id, String customer, Set<ProductDto> products, String status, ZonedDateTime createDate) {
+    public OrderDto(Long id, String orderId, String customer, Set<ProductDto> products, String status, ZonedDateTime createDate) {
         this.id = id;
+        this.orderId = orderId;
         this.customer = customer;
         this.products = products;
         this.status = status;
         this.createDate = createDate;
     }
 
-    public OrderDto(String customer, String status, Set<ProductDto> products) {
+    public OrderDto(Long id, String customer, String status, Set<ProductDto> products) {
+        this.id = id;
         this.customer = customer;
         this.products = products;
         this.status = status;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String orderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getCustomer() {

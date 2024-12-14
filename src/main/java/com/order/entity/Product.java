@@ -12,9 +12,12 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
+
+    private Long id;
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private String productId;
 
     private String category;
 
@@ -26,7 +29,16 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(String id, String category, String name, BigDecimal price, Integer quantity) {
+    public Product(Long id, String productId, String category, String name, BigDecimal price, Integer quantity) {
+        this.id = id;
+        this.productId = productId;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Product(Long id, String category, String name, BigDecimal price, Integer quantity) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -34,19 +46,20 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public Product( String category, String name, BigDecimal price, Integer quantity) {
-        this.category = category;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getCategory() {
@@ -79,5 +92,16 @@ public class Product implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", category='" + category + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 }
