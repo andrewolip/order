@@ -32,6 +32,7 @@ public class CalculateTotalProductPriceImpl implements CalculateTotalProductPric
                 .map(orderDto -> {
                     var orderTotalPrice = calculate(orderDto);
                     orderDto.setStatus("COMPLETED");
+                    orderDto.setTotalPrice(orderTotalPrice);
                     var order = saveOrderService.save(orderDto);
                     return new CalculatedOrderDto(order, orderTotalPrice);
                 })

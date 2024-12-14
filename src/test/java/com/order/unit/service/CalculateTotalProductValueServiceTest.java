@@ -61,7 +61,7 @@ public class CalculateTotalProductValueServiceTest {
     public void test3() {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             service.calculate(Set.of(
-                    new OrderDto(1L, UUID.randomUUID().toString(), CUSTOMER, null, PENDING_STATUS, null)
+                    new OrderDto(UUID.randomUUID().toString(),1L, CUSTOMER, null, PENDING_STATUS, null, null)
             ));
         });
 
@@ -73,7 +73,7 @@ public class CalculateTotalProductValueServiceTest {
     public void test4() {
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             service.calculate(Set.of(
-                    new OrderDto(1L, UUID.randomUUID().toString(), CUSTOMER, Collections.emptySet(), PENDING_STATUS, null)
+                    new OrderDto(UUID.randomUUID().toString(), 1L, CUSTOMER, Collections.emptySet(), PENDING_STATUS, null, null)
             ));
         });
 
@@ -95,7 +95,7 @@ public class CalculateTotalProductValueServiceTest {
                                 new ProductDto(5L,"Prod5", "Cat1", BigDecimal.valueOf(100.0), 3),
                                 new ProductDto(6L,"Prod6", "Cat1", BigDecimal.valueOf(120), 4),
                                 new ProductDto(7L,"Prod7", "Cat1", BigDecimal.valueOf(100), 1)
-                        ))
+                        ), total)
                 )
         );
         Assertions.assertEquals(orders.getFirst().totalPrice(), total);

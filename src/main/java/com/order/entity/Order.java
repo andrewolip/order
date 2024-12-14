@@ -11,22 +11,24 @@ import jakarta.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Table(name = "orders")
 @Entity
 public class Order implements Serializable {
-    private Long id;
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "order_id")
-    private String orderId;
+    private String id;
+
+    private Long orderId;
 
     private String customer;
 
     private String status;
+
+    private BigDecimal totalPrice;
 
     @OneToMany(cascade = CascadeType.PERSIST)
     private Set<Product> products;
@@ -36,7 +38,7 @@ public class Order implements Serializable {
 
     public Order(){}
 
-    public Order(Long id, String orderId, String customer, String status, Set<Product> products, ZonedDateTime createDate) {
+    public Order(String id, Long orderId, String customer, String status, Set<Product> products, ZonedDateTime createDate) {
         this.id = id;
         this.orderId = orderId;
         this.customer = customer;
@@ -45,29 +47,30 @@ public class Order implements Serializable {
         this.createDate = createDate;
     }
 
-    public Order(Long id, String customer, String status, Set<Product> products) {
-        this.id = id;
+    public Order(Long orderId, String customer, String status, Set<Product> products, BigDecimal totalPrice) {
+        this.orderId = orderId;
         this.customer = customer;
         this.status = status;
         this.products = products;
+        this.totalPrice = totalPrice;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
-    
+
     public String getCustomer() {
         return customer;
     }
@@ -82,6 +85,14 @@ public class Order implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Set<Product> getProducts() {

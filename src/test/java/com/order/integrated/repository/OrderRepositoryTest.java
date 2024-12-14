@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,12 +44,14 @@ public class OrderRepositoryTest {
                 new Product(4L, "CAT4", CUSTOMER, BigDecimal.valueOf(110.0), 300),
                 new Product(5L,"CAT5", CUSTOMER, BigDecimal.valueOf(100.0), 10)
         );
-        var order = new Order(1L, CUSTOMER, STATUS, products);
-        var savedOrder = repository.save(order);
-        Assertions.assertNotNull(savedOrder);
-        Assertions.assertNotNull(savedOrder.getId());
-        Assertions.assertNotNull(savedOrder.getOrderId());
-        Assertions.assertFalse(savedOrder.getProducts().isEmpty());
+        var order = new Order(1L, CUSTOMER, STATUS, products, BigDecimal.valueOf(38050).setScale(2, RoundingMode.HALF_UP));
+        var newOrder = repository.save(order);
+
+        Assertions.assertNotNull(newOrder);
+        Assertions.assertNotNull(newOrder.getId());
+        Assertions.assertNotNull(newOrder.getOrderId());
+        Assertions.assertEquals(order.getTotalPrice(), newOrder.getTotalPrice());
+        Assertions.assertFalse(newOrder.getProducts().isEmpty());
     }
 
 }

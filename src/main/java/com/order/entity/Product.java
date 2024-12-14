@@ -13,11 +13,11 @@ import java.math.BigDecimal;
 @Table(name = "product")
 public class Product implements Serializable {
 
-    private Long id;
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String productId;
+    private String id;
+
+    private Long productId;
 
     private String category;
 
@@ -29,7 +29,7 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(Long id, String productId, String category, String name, BigDecimal price, Integer quantity) {
+    public Product(String id, Long productId, String category, String name, BigDecimal price, Integer quantity) {
         this.id = id;
         this.productId = productId;
         this.category = category;
@@ -38,27 +38,27 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
-    public Product(Long id, String category, String name, BigDecimal price, Integer quantity) {
-        this.id = id;
+    public Product(Long productId, String category, String name, BigDecimal price, Integer quantity) {
+        this.productId = productId;
         this.category = category;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

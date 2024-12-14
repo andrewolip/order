@@ -39,8 +39,8 @@ public class SaveOrderServiceTest {
         when(repository.save(any(Order.class)))
                 .thenReturn(
                         new Order(
-                            1L,
                             UUID.randomUUID().toString(),
+                            1L,
                             CUSTOMER,
                                 STATUS,
                             Set.of(
@@ -48,7 +48,7 @@ public class SaveOrderServiceTest {
                             )
                 );
 
-        var order = service.save(new OrderDto(1L, CUSTOMER, STATUS, Set.of(new ProductDto(1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150))));
+        var order = service.save(new OrderDto(1L, CUSTOMER, STATUS, Set.of(new ProductDto(1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150)), BigDecimal.valueOf(250.50)));
 
         Assertions.assertNotNull(order);
         Assertions.assertNotNull(order.getId());

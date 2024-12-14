@@ -3,14 +3,11 @@ package com.order.integrated.kafka;
 import com.order.dto.CalculatedOrderDto;
 import com.order.entity.Order;
 import com.order.entity.Product;
-import com.order.infrastructure.kafka.consumer.ExternalProductAConsumer;
 import com.order.infrastructure.kafka.producer.ExternalProductBProducer;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 
 import java.math.BigDecimal;
@@ -37,11 +34,11 @@ public class ExternalProductBProducerTest {
         var orders = List.of(
                 new CalculatedOrderDto(
                         new Order(
-                                1L,
                                 UUID.randomUUID().toString(),
+                                1L,
                                 "CUSTOMER_1",
                                 "COMPLETED",
-                                Set.of(new Product(1L, UUID.randomUUID().toString(), "CAT_1", "PROD_1", BigDecimal.valueOf(1500.45), 1)),
+                                Set.of(new Product(UUID.randomUUID().toString(), 1L, "CAT_1", "PROD_1", BigDecimal.valueOf(1500.45), 1)),
                                 ZonedDateTime.now()
                         ),
                         BigDecimal.valueOf(1500.45))
