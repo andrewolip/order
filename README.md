@@ -2,12 +2,17 @@
 
 It manages the orders received from ExternalProductA, calculates the total price of the products within each order, and then produces a new message to ExternalProductB.
 
+# Kafka UI can be accessed by
+http://localhost:8090/ui
 
-# Json sample to be consumed by kafka
+# PgAdmin
+http://localhost:5050/
+
+# Json sample to be consumed by Kafka
 
 [
   {
-		"orderId": 1,
+	"orderId": 1,
   	"customer": "Customer1",
   	"status": "PENDING",
   	"products": [
