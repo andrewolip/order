@@ -10,6 +10,9 @@ http://localhost:8090/ui
 # PgAdmin
 http://localhost:5050/
 
+![image](https://github.com/user-attachments/assets/94cca6a3-9dc8-42bf-b416-a7f6ef92d63e)
+
+
 # Json sample to be consumed by Kafka
 [
   {
