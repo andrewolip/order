@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class ExternalProductBProducerTest {
                                 "CUSTOMER_1",
                                 "COMPLETED",
                                 Set.of(new Product(UUID.randomUUID().toString(), 1L, "CAT_1", "PROD_1", BigDecimal.valueOf(1500.45), 1)),
-                                ZonedDateTime.now()
+                                LocalDateTime.now()
                         ),
                         BigDecimal.valueOf(1500.45))
         );

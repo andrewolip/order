@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,13 +42,17 @@ public class SaveOrderServiceTest {
                             UUID.randomUUID().toString(),
                             1L,
                             CUSTOMER,
-                                STATUS,
-                            Set.of(
-                              new Product(1L, UUID.randomUUID().toString(), PRODUCT, BigDecimal.valueOf(250.50), 1)), ZonedDateTime.now()
-                            )
+                            STATUS,
+                            Set.of(new Product(1L, UUID.randomUUID().toString(), PRODUCT, BigDecimal.valueOf(250.50), 1)), LocalDateTime.now())
                 );
 
-        var order = service.save(new OrderDto(1L, CUSTOMER, STATUS, Set.of(new ProductDto(1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150)), BigDecimal.valueOf(250.50)));
+        var order = service.save(new OrderDto(
+                1L,
+                CUSTOMER,
+                STATUS,
+                Set.of(new ProductDto(1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150)),
+                BigDecimal.valueOf(250.50),
+                LocalDateTime.now()));
 
         Assertions.assertNotNull(order);
         Assertions.assertNotNull(order.getId());

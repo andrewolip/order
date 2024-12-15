@@ -17,6 +17,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ import java.util.Set;
 public class ExternalProductAConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(ExternalProductAConsumer.class);
+
     private final ObjectMapper objectMapper;
     private final CalculateTotalProductPriceService service;
     private final ExternalProductBProducer producer;
@@ -52,7 +54,7 @@ public class ExternalProductAConsumer {
     public void consume(String message) {
         try {
             log.info("Consuming a new message {}", message);
-            Set<OrderDto> orders = objectMapper.readValue(message, new TypeReference<Set<OrderDto>>() {});
+            Set<OrderDto> orders = objectMapper.readValue(message, new TypeReference<HashSet<OrderDto>>() {});
             var calculatedOrders = service.calculate(orders);
             producer.sendMessage(calculatedOrders);
         } catch (JsonProcessingException ex) {

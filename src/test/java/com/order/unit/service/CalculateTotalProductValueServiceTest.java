@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Set;
 import java.util.UUID;
@@ -87,15 +88,19 @@ public class CalculateTotalProductValueServiceTest {
         var total = new BigDecimal("1357.50").setScale(2, RoundingMode.HALF_UP);
         var orders = service.calculate(
                 Set.of(
-                        new OrderDto(1L, CUSTOMER, PENDING_STATUS, Set.of(
-                                new ProductDto(1L,"Prod1", "Cat1", BigDecimal.valueOf(10), 5),
-                                new ProductDto(2L,"Prod2", "Cat1", BigDecimal.valueOf(15.25), 2),
-                                new ProductDto(3L,"Prod3", "Cat1", BigDecimal.valueOf(24), 4),
-                                new ProductDto(4L,"Prod4", "Cat1", BigDecimal.valueOf(150.50), 2),
-                                new ProductDto(5L,"Prod5", "Cat1", BigDecimal.valueOf(100.0), 3),
-                                new ProductDto(6L,"Prod6", "Cat1", BigDecimal.valueOf(120), 4),
-                                new ProductDto(7L,"Prod7", "Cat1", BigDecimal.valueOf(100), 1)
-                        ), total)
+                        new OrderDto(
+                                1L, CUSTOMER, PENDING_STATUS, Set.of(
+                                    new ProductDto(1L,"Prod1", "Cat1", BigDecimal.valueOf(10), 5),
+                                    new ProductDto(2L,"Prod2", "Cat1", BigDecimal.valueOf(15.25), 2),
+                                    new ProductDto(3L,"Prod3", "Cat1", BigDecimal.valueOf(24), 4),
+                                    new ProductDto(4L,"Prod4", "Cat1", BigDecimal.valueOf(150.50), 2),
+                                    new ProductDto(5L,"Prod5", "Cat1", BigDecimal.valueOf(100.0), 3),
+                                    new ProductDto(6L,"Prod6", "Cat1", BigDecimal.valueOf(120), 4),
+                                    new ProductDto(7L,"Prod7", "Cat1", BigDecimal.valueOf(100), 1)
+                            ),
+                                total,
+                                LocalDateTime.now()
+                    )
                 )
         );
         Assertions.assertEquals(orders.getFirst().totalPrice(), total);

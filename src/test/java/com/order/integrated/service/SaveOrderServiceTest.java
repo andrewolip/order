@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
@@ -29,7 +30,8 @@ public class SaveOrderServiceTest {
                 "CUSTOMER_1",
                 "COMPLETED",
                 Set.of(new ProductDto(1L, "PROD_1", "CAT_1", BigDecimal.valueOf(150.50), 100)),
-                BigDecimal.valueOf(15050)
+                BigDecimal.valueOf(15050),
+                LocalDateTime.now()
         );
         var newOrder = service.save(order);
 

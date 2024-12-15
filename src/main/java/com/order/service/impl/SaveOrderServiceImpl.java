@@ -22,6 +22,7 @@ public class SaveOrderServiceImpl implements SaveOrderService {
 
     @Override
     public Order save(OrderDto orderDto) {
+        // TODO: validate if the Order has been saved already
         return orderRepository.save(orderMapper.toEntity(orderDto));
     }
 

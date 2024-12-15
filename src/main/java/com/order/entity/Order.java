@@ -1,18 +1,16 @@
 package com.order.entity;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Table(name = "orders")
@@ -33,12 +31,11 @@ public class Order implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST)
     private Set<Product> products;
 
-    @CreatedDate
-    private ZonedDateTime createDate;
+    private LocalDateTime createDate;
 
     public Order(){}
 
-    public Order(String id, Long orderId, String customer, String status, Set<Product> products, ZonedDateTime createDate) {
+    public Order(String id, Long orderId, String customer, String status, Set<Product> products, LocalDateTime createDate) {
         this.id = id;
         this.orderId = orderId;
         this.customer = customer;
@@ -103,11 +100,11 @@ public class Order implements Serializable {
         this.products = products;
     }
 
-    public ZonedDateTime getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(ZonedDateTime createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 }

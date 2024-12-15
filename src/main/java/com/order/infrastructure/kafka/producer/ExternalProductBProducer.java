@@ -34,8 +34,8 @@ public class ExternalProductBProducer {
     public void sendMessage(List<CalculatedOrderDto> calculatedOrders) {
         try {
             log.info("Producing a new message {}", calculatedOrders);
-            String resultJson = objectMapper.writeValueAsString(calculatedOrders);
-            kafkaTemplate.send("externalProductBProducerTopic", resultJson);
+            String message = objectMapper.writeValueAsString(calculatedOrders);
+            kafkaTemplate.send(topic, message);
         } catch(JsonProcessingException ex) {
             log.error("Error to convert Orders into Kafka message", ex);
         }

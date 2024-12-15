@@ -20,15 +20,6 @@ public class ProductDto {
         this.quantity = quantity;
     }
 
-    public ProductDto(String id, Long productId, String name, String category, BigDecimal price, Integer quantity) {
-        this.id = id;
-        this.productId = productId;
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
     public String id() {
         return id;
     }

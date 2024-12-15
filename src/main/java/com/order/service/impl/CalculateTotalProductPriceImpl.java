@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,12 +29,13 @@ public class CalculateTotalProductPriceImpl implements CalculateTotalProductPric
         if (orders == null || orders.isEmpty()) {
             throw new IllegalArgumentException("Orders cannot be null or empty");
         }
+
         return orders.stream()
                 .map(orderDto -> {
                     var orderTotalPrice = calculate(orderDto);
-                    orderDto.setStatus("COMPLETED");
-                    orderDto.setTotalPrice(orderTotalPrice);
-                    var order = saveOrderService.save(orderDto);
+                    var orderDetailDto = updateOrderDetails(orderDto, orderTotalPrice);
+                    var order = saveOrderService.save(orderDetailDto);
+
                     return new CalculatedOrderDto(order, orderTotalPrice);
                 })
                 .collect(Collectors.toList());
@@ -46,5 +48,17 @@ public class CalculateTotalProductPriceImpl implements CalculateTotalProductPric
         return order.getProducts().stream()
                 .map(productDto -> productDto.getPrice().multiply(BigDecimal.valueOf(productDto.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private OrderDto updateOrderDetails(OrderDto orderDto, BigDecimal totalPrice) {
+        // todo: create a builder
+        return new OrderDto(
+                orderDto.getOrderId(),
+                orderDto.getCustomer(),
+                "COMPLETED",// todo: create an ENUM
+                orderDto.getProducts(),
+                totalPrice,
+                LocalDateTime.now()
+        );
     }
 }
