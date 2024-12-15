@@ -1,7 +1,6 @@
 package com.order.integrated.kafka;
 
 import com.order.infrastructure.kafka.consumer.ExternalProductAConsumer;
-import com.order.infrastructure.kafka.producer.ExternalProductBProducer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ class ConsumerProducerIntegratedTest {
 
     @Autowired
     private ExternalProductAConsumer consumer;
-
-    @Autowired
-    private ExternalProductBProducer producer;
 
     @DisplayName("Should consume a message in ConsumerTopic, calculate the orders and then produce a new message in ProducerTopic")
     @Test

@@ -1,31 +1,20 @@
 package com.order.service.impl;
 
-import com.order.dto.CalculatedOrderDto;
 import com.order.dto.OrderDto;
 import com.order.service.CalculateTotalProductPriceService;
-import com.order.service.SaveOrderService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class CalculateTotalProductPriceImpl implements CalculateTotalProductPriceService {
 
-    private final SaveOrderService saveOrderService;
-
-    public CalculateTotalProductPriceImpl(SaveOrderService saveOrderService) {
-        this.saveOrderService = saveOrderService;
-    }
-
-    // TODO: avoid duplicates order
-    @Transactional
     @Override
-    public List<CalculatedOrderDto> calculate(Set<OrderDto> orders) {
+    public Set<OrderDto> calculate(Set<OrderDto> orders) {
         if (orders == null || orders.isEmpty()) {
             throw new IllegalArgumentException("Orders cannot be null or empty");
         }
@@ -33,12 +22,9 @@ public class CalculateTotalProductPriceImpl implements CalculateTotalProductPric
         return orders.stream()
                 .map(orderDto -> {
                     var orderTotalPrice = calculate(orderDto);
-                    var orderDetailDto = updateOrderDetails(orderDto, orderTotalPrice);
-                    var order = saveOrderService.save(orderDetailDto);
-
-                    return new CalculatedOrderDto(order, orderTotalPrice);
+                    return updateOrderDetails(orderDto, orderTotalPrice);
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     private BigDecimal calculate(OrderDto order) {
@@ -57,7 +43,7 @@ public class CalculateTotalProductPriceImpl implements CalculateTotalProductPric
                 orderDto.getCustomer(),
                 "COMPLETED",// todo: create an ENUM
                 orderDto.getProducts(),
-                totalPrice,
+                totalPrice.setScale(2, RoundingMode.HALF_UP),
                 LocalDateTime.now()
         );
     }

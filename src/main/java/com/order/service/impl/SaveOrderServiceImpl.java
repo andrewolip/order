@@ -5,7 +5,12 @@ import com.order.entity.Order;
 import com.order.infrastructure.repository.OrderRepository;
 import com.order.mapper.OrderMapper;
 import com.order.service.SaveOrderService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class SaveOrderServiceImpl implements SaveOrderService {
@@ -21,9 +26,8 @@ public class SaveOrderServiceImpl implements SaveOrderService {
     }
 
     @Override
-    public Order save(OrderDto orderDto) {
-        // TODO: validate if the Order has been saved already
-        return orderRepository.save(orderMapper.toEntity(orderDto));
+    public List<Order> save(Set<OrderDto> orders) {
+        return orderRepository.saveAll(orders.stream().map(orderMapper::toEntity).collect(Collectors.toSet()));
     }
 
 }

@@ -3,6 +3,9 @@ package com.order.service;
 import com.order.dto.OrderDto;
 import com.order.entity.Order;
 
+import java.util.List;
+import java.util.Set;
+
 public interface SaveOrderService {
-    Order save(OrderDto order);
+    List<Order> save(Set<OrderDto> order);
 }

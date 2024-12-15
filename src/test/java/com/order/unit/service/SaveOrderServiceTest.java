@@ -15,10 +15,11 @@ import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anySet;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,26 +37,26 @@ public class SaveOrderServiceTest {
     @DisplayName("Should receive an orderDto, convert it to entity and then save to the Db")
     @Test
     public void test1() {
-        when(repository.save(any(Order.class)))
+        when(repository.saveAll(anySet()))
                 .thenReturn(
-                        new Order(
-                            UUID.randomUUID().toString(),
-                            1L,
-                            CUSTOMER,
-                            STATUS,
-                            Set.of(new Product(1L, UUID.randomUUID().toString(), PRODUCT, BigDecimal.valueOf(250.50), 1)), LocalDateTime.now())
+                        List.of(new Order(
+                                UUID.randomUUID().toString(),
+                                1L,
+                                CUSTOMER,
+                                STATUS,
+                                Set.of(new Product(1L, UUID.randomUUID().toString(), PRODUCT, BigDecimal.valueOf(250.50), 1)), LocalDateTime.now()))
                 );
 
-        var order = service.save(new OrderDto(
+        var orders = service.save(Set.of( new OrderDto(
                 1L,
                 CUSTOMER,
                 STATUS,
-                Set.of(new ProductDto(1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150)),
+                Set.of(new ProductDto( 1L, PRODUCT, CATEGORY, BigDecimal.valueOf(250.50), 150)),
                 BigDecimal.valueOf(250.50),
-                LocalDateTime.now()));
+                LocalDateTime.now())));
 
-        Assertions.assertNotNull(order);
-        Assertions.assertNotNull(order.getId());
-        Assertions.assertNotNull(order.getProducts());
+        Assertions.assertNotNull(orders);
+        Assertions.assertNotNull(orders.getFirst().getId());
+        Assertions.assertNotNull(orders.getFirst().getProducts());
     }
 }

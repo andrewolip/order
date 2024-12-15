@@ -2,7 +2,7 @@ package com.order.infrastructure.kafka.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.order.dto.CalculatedOrderDto;
+import com.order.dto.OrderDto;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class ExternalProductBProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(List<CalculatedOrderDto> calculatedOrders) {
+    public void sendMessage(List<OrderDto> calculatedOrders) {
         try {
             log.info("Producing a new message {}", calculatedOrders);
             String message = objectMapper.writeValueAsString(calculatedOrders);

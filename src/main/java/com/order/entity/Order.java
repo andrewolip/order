@@ -44,12 +44,13 @@ public class Order implements Serializable {
         this.createDate = createDate;
     }
 
-    public Order(Long orderId, String customer, String status, Set<Product> products, BigDecimal totalPrice) {
+    public Order(Long orderId, String customer, String status, Set<Product> products, BigDecimal totalPrice, LocalDateTime createDate) {
         this.orderId = orderId;
         this.customer = customer;
         this.status = status;
         this.products = products;
         this.totalPrice = totalPrice;
+        this.createDate = createDate;
     }
 
     public String getId() {

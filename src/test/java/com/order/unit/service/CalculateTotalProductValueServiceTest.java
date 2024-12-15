@@ -2,15 +2,12 @@ package com.order.unit.service;
 
 import com.order.dto.OrderDto;
 import com.order.dto.ProductDto;
-import com.order.entity.Order;
-import com.order.service.SaveOrderService;
 import com.order.service.impl.CalculateTotalProductPriceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -22,17 +19,12 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CalculateTotalProductValueServiceTest {
 
     private static final String CUSTOMER = "CUSTOMER_1";
     private static final String PENDING_STATUS = "PENDING";
-
-    @Mock
-    private SaveOrderService saveOrderService;
 
     @InjectMocks
     private CalculateTotalProductPriceImpl service;
@@ -84,7 +76,6 @@ public class CalculateTotalProductValueServiceTest {
     @DisplayName("Should calculate the total product price properly")
     @Test
     public void test5() {
-        when(saveOrderService.save(any(OrderDto.class))).thenReturn(any(Order.class));
         var total = new BigDecimal("1357.50").setScale(2, RoundingMode.HALF_UP);
         var orders = service.calculate(
                 Set.of(
@@ -103,7 +94,7 @@ public class CalculateTotalProductValueServiceTest {
                     )
                 )
         );
-        Assertions.assertEquals(orders.getFirst().totalPrice(), total);
+        Assertions.assertEquals(orders.stream().findFirst().get().getTotalPrice(), total);
     }
 
 }
