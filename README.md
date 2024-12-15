@@ -1,6 +1,8 @@
-# ORDER API ( SpringBoot and Kafka )
+# ORDER API ( SpringBoot + Docker + Kafka + PostgreSQL )
 
 It manages the orders received from ExternalProductA, calculates the total price of the products within each order, and then produces a new message to ExternalProductB.
+
+# JDK 21.0.5 temurin
 
 # Kafka UI can be accessed by
 http://localhost:8090/ui
