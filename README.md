@@ -2,6 +2,9 @@
 
 It manages the orders received from ExternalProductA, calculates the total price of the products within each order, and then produces a new message to ExternalProductB.
 
+![image](https://github.com/user-attachments/assets/720b0688-0670-4013-a301-7a1534f13c26)
+
+
 # JDK 21.0.5 temurin
 
 # Kafka UI can be accessed by
